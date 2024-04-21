@@ -1,0 +1,161 @@
+<html>
+
+    <head>
+    
+        <title>Javascript</title>
+    
+    </head>
+    
+    <link rel="stylesheet" type="text/css" href="style.css">
+    
+    <body>
+        
+        <h1>Test Your Reactions!</h1>
+        
+        <p>Click on the boxes and circles as quickly as you can!</p>
+        
+        <p id="reactionTime">Your time: <span id="timeTaken"></span></p>
+        
+        <p>Personel Best : <span id="personelBest"></span></p>
+        
+        <div id="testingArea">
+            
+            <div id="randomShape"></div>
+            
+        </div>
+        
+        
+        <script type="text/javascript">
+        
+            function timeInitial() {
+                
+                var timeNow = new Date().getTime();
+                
+                return (timeNow);
+                
+            }
+            
+            var timeStart = 0;
+            
+            function getRandomColor() {
+
+                var letters = ("0123456789ABCDEF").split("");
+
+                var color = "#";
+
+                for (i = 0; i < 6; i++) {
+
+                    color += letters[Math.floor(Math.random() * 16)] 
+
+                }
+
+                return (color);
+
+            }
+
+            function getRandomWidth() {
+
+                var width = Math.floor(Math.random() * 201) + 70;
+
+                return (width)
+
+            }
+
+            var randomShapeWidth = getRandomWidth();
+            //uses to keep width and height same and to use the same value to calculate radius
+
+            function getRandomShape() {
+
+                if (Math.random() > 0.5) {
+
+                    var borderRadius = "50%";
+
+                }else {
+
+                    var borderRadius = 0;
+
+                }
+
+                return (borderRadius)
+
+            }
+
+            function positionTop(shapeWidth) {
+
+                var marginSide = Math.floor(Math.random() * (501 - shapeWidth));
+
+                return (marginSide);
+
+            } 
+
+            function positionLeft(shapeWidth) {
+
+                var marginSide = Math.floor(Math.random() * (600 - shapeWidth));
+
+                return (marginSide);
+
+            } 
+            
+            var timeInterval = 0;
+            
+            function shapeShifting() {
+                
+                var randomShapeWidth = getRandomWidth();
+
+                document.getElementById("randomShape").style.width = randomShapeWidth + "px";
+
+                document.getElementById("randomShape").style.height = randomShapeWidth + "px";
+
+                document.getElementById("randomShape").style.borderRadius = getRandomShape() ;
+
+                document.getElementById("randomShape").style.backgroundColor = getRandomColor();
+
+                document.getElementById("randomShape").style.top = positionTop(randomShapeWidth);
+
+                document.getElementById("randomShape").style.left = positionLeft(randomShapeWidth);
+                
+                document.getElementById("randomShape").style.display = "block";
+                            
+            }
+            
+            window.onload = function () {
+                
+                timeInterval = Math.floor(Math.random() * 3001);
+                
+                timeStart = timeInitial();
+
+                setTimeout(shapeShifting, timeInterval);
+            
+            }
+            
+            var personelBest = Infinity;
+
+            document.getElementById("randomShape").onclick = function () {
+
+                var timeTaken = (timeInitial() - timeStart - timeInterval)/1000 + "&nbsp;s";
+                
+                document.getElementById("timeTaken").innerHTML = timeTaken;
+                
+                if (personelBest > (timeInitial() - timeStart - timeInterval)/1000) {
+                    
+                    personelBest = (timeInitial() - timeStart - timeInterval)/1000;
+                    
+                    document.getElementById("personelBest").innerHTML = personelBest + "&nbsp;s";
+                    
+                }
+                
+                timeStart = timeInitial();
+
+                document.getElementById("randomShape").style.display =  "none";
+
+                timeInterval = Math.floor(Math.random() * 3001);
+
+                setTimeout(shapeShifting, timeInterval);
+
+            }
+        
+        </script>
+    
+    </body>
+
+</html>
